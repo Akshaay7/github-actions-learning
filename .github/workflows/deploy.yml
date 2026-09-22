@@ -1,0 +1,26 @@
+name: Deploy Website to Local Nginx
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v6
+
+      - name: Deploy website
+        run: |
+          sudo cp website/index.html /var/www/html/index.html
+
+      - name: Test Nginx
+        run: |
+          curl http://localhost:82
+
+      - name: Deployment completed
+        run: |
+          echo "Website deployed successfully to local Nginx"
